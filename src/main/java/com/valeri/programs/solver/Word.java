@@ -2,7 +2,10 @@ package com.valeri.programs.solver;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class Word {
 
@@ -13,7 +16,9 @@ class Word {
     }
 
     public Set<Character> getUniqChars() {
-        throw new NotImplementedException();
+        return word.chars()
+                .mapToObj(c -> (char)c)
+                .collect(Collectors.toSet());
     }
 
 }
