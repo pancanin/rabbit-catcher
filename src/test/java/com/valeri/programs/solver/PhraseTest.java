@@ -39,4 +39,12 @@ public class PhraseTest {
         Assertions.assertEquals("abcdefgh", p.computeSortedLetters());
     }
 
+    @Test
+    public void shouldReturnThePhraseAsSentenceText() {
+        String pText = "a e cb dfgh";
+        Phrase p = new Phrase(pText);
+
+        Assertions.assertEquals(pText, p.toString());
+    }
+
 }

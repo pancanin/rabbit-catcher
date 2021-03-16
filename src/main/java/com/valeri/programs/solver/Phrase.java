@@ -2,6 +2,10 @@ package com.valeri.programs.solver;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.xml.bind.DatatypeConverter;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -21,13 +25,11 @@ class Phrase {
     }
 
     public int getWordCount() {
-        throw new NotImplementedException();
+        return this.words.size();
     }
 
     public String computeSortedLetters() {
-        return this.words.stream()
-            .map(Word::getPlainText)
-            .collect(Collectors.joining(""))
+        return this.toString()
             .chars()
             .mapToObj(c -> "" + (char)c)
             .sorted()
@@ -44,7 +46,22 @@ class Phrase {
         return this.computeSortedLetters().equals(other.computeSortedLetters());
     }
 
-    public String calculateMD5Hash() {
-        throw new NotImplementedException();
+    public String calculateMD5Hash(){
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(this.toString().getBytes(StandardCharsets.UTF_8));
+            byte[] digest = md.digest();
+
+            return DatatypeConverter.printHexBinary(digest);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    @Override
+    public String toString() {
+        return this.words.stream()
+                .map(Word::getPlainText)
+                .collect(Collectors.joining(" "));
     }
 }
