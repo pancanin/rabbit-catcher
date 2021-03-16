@@ -2,10 +2,8 @@ package com.valeri.programs.solver;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 class Word {
 
@@ -21,4 +19,28 @@ class Word {
                 .collect(Collectors.toSet());
     }
 
+    public boolean containsOnly(Phrase p) {
+        Set<Character> uniqueInPhrase = p.getUniqChars();
+        return word.chars()
+                .mapToObj(c -> (char) c)
+                .allMatch(uniqueInPhrase::contains);
+    }
+
+    @Override
+    public int hashCode() {
+        return word.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Word)) {
+            return false;
+        }
+
+        if (this == obj) {
+            return true;
+        }
+
+        return this.hashCode() == obj.hashCode();
+    }
 }

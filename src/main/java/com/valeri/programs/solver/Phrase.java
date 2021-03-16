@@ -3,6 +3,8 @@ package com.valeri.programs.solver;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 class Phrase {
     private final List<Word> words;
@@ -13,6 +15,12 @@ class Phrase {
 
     public int getWordCount() {
         throw new NotImplementedException();
+    }
+
+    public Set<Character> getUniqChars() {
+        return words.stream()
+                .flatMap(word -> word.getUniqChars().stream())
+                .collect(Collectors.toSet());
     }
 
     public boolean checkAnagram(Phrase other) {
