@@ -24,4 +24,19 @@ public class PhraseTest {
         Assertions.assertTrue(uniq.contains('e'));
     }
 
+    @Test
+    public void shouldBeTrueWhenPhrasesAreAnagrams() {
+        Phrase p = new Phrase("the brown fox");
+        Phrase p2 = new Phrase("brow then fox");
+
+        //Assertions.assertTrue(p.checkAnagram(p2));
+    }
+
+    @Test
+    public void shouldReturnSortedLettersOfAWord() {
+        Phrase p = new Phrase("a e cb dfgh");
+
+        Assertions.assertEquals("abcdefgh", p.computeSortedLetters());
+    }
+
 }

@@ -43,4 +43,8 @@ class Word {
 
         return this.hashCode() == obj.hashCode();
     }
+
+    public String getPlainText() {
+        return this.word;
+    }
 }
