@@ -3,10 +3,7 @@ package com.valeri.programs.solver;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class DictionaryTest {
 
@@ -54,4 +51,22 @@ public class DictionaryTest {
 
         Assertions.assertTrue(containing.isEmpty());
     }
+
+    @Test
+    public void shouldGenerateVariations() {
+        Word w = new Word("the");
+        Word w2 = new Word("brown");
+        Word w3 = new Word("fox");
+        Word w4 = new Word("jumped");
+        Phrase p = new Phrase(Arrays.asList(w, w2, w3, w4));
+        List<Word> wordsFromPhrase = Arrays.asList(w, w2, w3, w4);
+        Dictionary d = new Dictionary(wordsFromPhrase);
+
+        List<Phrase> variations = d.generateVariations(p);
+        int variationsWithRepetitionsCount = (int)Math.pow(p.getWordCount(), p.getWordCount());
+        Assertions.assertEquals(variationsWithRepetitionsCount, variations.size());
+        Assertions.assertTrue(variations.stream().anyMatch(v -> "fox jumped the brown".equals(v.toString())));
+    }
+
+
 }

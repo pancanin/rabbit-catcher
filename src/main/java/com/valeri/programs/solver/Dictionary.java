@@ -2,9 +2,7 @@ package com.valeri.programs.solver;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 class Dictionary {
@@ -21,6 +19,26 @@ class Dictionary {
     }
 
     public List<Phrase> generateVariations(Phrase phrase) {
-        throw new NotImplementedException();
+        Stack<Word> wordStack = new Stack<>();
+        List<List<Word>> variations = new ArrayList<>();
+
+        generateVariations(this.words, phrase.getWordCount(), wordStack, variations);
+
+        return variations
+                .stream()
+                .map(Phrase::new)
+                .collect(Collectors.toList());
+    }
+
+    void generateVariations(List<Word> input, int depth, Stack<Word> wordStack, List<List<Word>> variations) {
+        if (depth == 0) {
+            variations.add(new ArrayList<>(wordStack));
+        } else {
+            for (int i = 0; i < input.size(); i++) {
+                wordStack.add(input.get(i));
+                generateVariations(input, depth - 1, wordStack, variations);
+                wordStack.pop();
+            }
+        }
     }
 }

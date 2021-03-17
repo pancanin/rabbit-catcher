@@ -1,7 +1,6 @@
 package com.valeri.programs.solver;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,25 +25,20 @@ class Word {
                 .allMatch(uniqueInPhrase::contains);
     }
 
-    @Override
-    public int hashCode() {
-        return word.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Word)) {
-            return false;
-        }
-
-        if (this == obj) {
-            return true;
-        }
-
-        return this.hashCode() == obj.hashCode();
-    }
-
     public String getPlainText() {
         return this.word;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Word word1 = (Word) o;
+        return word.equals(word1.word);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(word);
     }
 }

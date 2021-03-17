@@ -29,14 +29,30 @@ public class PhraseTest {
         Phrase p = new Phrase("the brown fox");
         Phrase p2 = new Phrase("brow then fox");
 
-        //Assertions.assertTrue(p.checkAnagram(p2));
+        Assertions.assertTrue(p.checkAnagram(p2));
+    }
+
+    @Test
+    public void shouldBeTrueWhenPhrasesAreAnagrams2() {
+        Phrase p = new Phrase("JVM platform kicks ass o");
+        Phrase p2 = new Phrase("form plato kick sass VMJ");
+
+        Assertions.assertTrue(p.checkAnagram(p2));
+    }
+
+    @Test
+    public void shouldBeFalseWhenPhrasesAreAnagrams() {
+        Phrase p = new Phrase("JVM platform kicks ass o");
+        Phrase p2 = new Phrase("form splat kick sass");
+
+        Assertions.assertFalse(p.checkAnagram(p2));
     }
 
     @Test
     public void shouldReturnSortedLettersOfAWord() {
         Phrase p = new Phrase("a e cb dfgh");
 
-        Assertions.assertEquals("abcdefgh", p.computeSortedLetters());
+        Assertions.assertEquals("   abcdefgh", p.computeSortedLetters());
     }
 
     @Test
@@ -45,6 +61,15 @@ public class PhraseTest {
         Phrase p = new Phrase(pText);
 
         Assertions.assertEquals(pText, p.toString());
+    }
+
+    @Test
+    public void shouldReturnMD5HashOfThePhrase() {
+        String hash = "35454B055CC325EA1AF2126E27707052";
+        String password = "ILoveJava";
+        Phrase p = new Phrase(password);
+
+        Assertions.assertEquals(hash, p.calculateMD5Hash());
     }
 
 }

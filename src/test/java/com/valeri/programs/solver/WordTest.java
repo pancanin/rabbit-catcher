@@ -39,4 +39,15 @@ public class WordTest {
 
         Assertions.assertTrue(w.containsOnly(phrase));
     }
+
+    @Test
+    public void shouldBeFalseWhenWordContainsOtherLettersToo() {
+        Word w = new Word("abcdgh");
+
+        Word pw = new Word("aab");
+        Word pw2 = new Word("cdd");
+        Phrase phrase = new Phrase(Arrays.asList(pw, pw2));
+
+        Assertions.assertFalse(w.containsOnly(phrase));
+    }
 }
