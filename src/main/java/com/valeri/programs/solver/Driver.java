@@ -1,15 +1,8 @@
 package com.valeri.programs.solver;
 
-import org.junit.platform.commons.util.ClassLoaderUtils;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -25,7 +18,7 @@ final public class Driver {
         List<String> usefulWords = Files.readAllLines(Paths.get("src/main/resources/wordlist"))
                 .stream()
                 .parallel()
-                .filter(w -> w.chars().allMatch(c -> phraseAnagram.getUniqChars().contains((char)c)))
+                .filter(w -> w.chars().allMatch(c -> phraseAnagram.getUniqueChars().contains((char)c)))
                 .collect(Collectors.toList());
 
         List<List<String>> wordArrangements = new ArrayList<>();
@@ -50,9 +43,9 @@ final public class Driver {
             int finalI = i;
             new Thread(() -> {
                 AnagramGenerator anagramGenerator = new AnagramGenerator(
-                        wordArrangements.get(finalI),
-                        phraseAnagram,
-                        hardHash
+                    wordArrangements.get(finalI),
+                    phraseAnagram,
+                    easyHash
                 );
                 anagramGenerator.generateVariations();
                 latch.countDown();

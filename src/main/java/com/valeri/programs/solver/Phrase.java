@@ -9,28 +9,28 @@ import java.util.stream.Collectors;
 
 class Phrase {
     private final Stack<String> words;
-    private final Map<Character, Long> occurences;
+    private final Map<Character, Long> groupingCountByCharacter;
 
     public Phrase(String phrase) {
         this.words = new Stack<>();
         this.words.addAll(Arrays.asList(phrase.split(" ")));
-        this.occurences = calcOccurences();
+        this.groupingCountByCharacter = countByCharacter();
     }
 
     public Phrase() {
         this.words = new Stack<>();
-        this.occurences = new HashMap<>();
+        this.groupingCountByCharacter = new HashMap<>();
     }
 
     public void addWord(String w) {
         this.words.add(w);
 
         for (int i = 0; i < w.length(); i++) {
-            if (!this.occurences.containsKey(w.charAt(i))) {
-                this.occurences.put(w.charAt(i), 0L);
+            if (!this.groupingCountByCharacter.containsKey(w.charAt(i))) {
+                this.groupingCountByCharacter.put(w.charAt(i), 0L);
             }
 
-            this.occurences.put(w.charAt(i), this.occurences.get(w.charAt(i)) + 1);
+            this.groupingCountByCharacter.put(w.charAt(i), this.groupingCountByCharacter.get(w.charAt(i)) + 1);
         }
     }
 
@@ -38,10 +38,10 @@ class Phrase {
         String w = this.words.pop();
 
         for (int i = 0; i < w.length(); i++) {
-            this.occurences.put(w.charAt(i), this.occurences.get(w.charAt(i)) - 1);
+            this.groupingCountByCharacter.put(w.charAt(i), this.groupingCountByCharacter.get(w.charAt(i)) - 1);
 
-            if (this.occurences.get(w.charAt(i)) == 0) {
-                this.occurences.remove(w.charAt(i));
+            if (this.groupingCountByCharacter.get(w.charAt(i)) == 0) {
+                this.groupingCountByCharacter.remove(w.charAt(i));
             }
         }
     }
@@ -50,12 +50,12 @@ class Phrase {
         return this.words.size();
     }
 
-    public Set<Character> getUniqChars() {
-        return this.occurences.keySet();
+    public Set<Character> getUniqueChars() {
+        return this.groupingCountByCharacter.keySet();
     }
 
     public boolean checkAnagram(Phrase other) {
-        return this.getUniqChars().equals(other.getUniqChars());
+        return this.getUniqueChars().equals(other.getUniqueChars());
     }
 
     public String calculateMD5Hash(){
@@ -70,17 +70,9 @@ class Phrase {
         }
     }
 
-    private Map<Character, Long> calcOccurences() {
-        return this.words
-                .stream()
-                .flatMapToInt(CharSequence::chars)
-                .mapToObj(i -> (char) i)
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-    }
-
     public boolean hasMoreLetters(Phrase other) {
-        Map<Character, Long> phraseLetterOccurences = this.calcOccurences();
-        Map<Character, Long> otherOccurences = other.getOccurences();
+        Map<Character, Long> phraseLetterOccurences = this.countByCharacter();
+        Map<Character, Long> otherOccurences = other.getCountByCharacter();
 
         for (Map.Entry<Character, Long> entry : phraseLetterOccurences.entrySet()) {
             if (otherOccurences.get(entry.getKey()) < entry.getValue()) {
@@ -91,8 +83,16 @@ class Phrase {
         return false;
     }
 
-    public Map<Character, Long> getOccurences() {
-        return Collections.unmodifiableMap(this.occurences);
+    public Map<Character, Long> getCountByCharacter() {
+        return Collections.unmodifiableMap(this.groupingCountByCharacter);
+    }
+
+    private Map<Character, Long> countByCharacter() {
+        return this.words
+                .stream()
+                .flatMapToInt(CharSequence::chars)
+                .mapToObj(i -> (char) i)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
     @Override

@@ -12,7 +12,7 @@ public class PhraseTest {
     public void shouldReturnAllUniqueCharactersInPhrase() {
         Phrase phrase = new Phrase("aabbcc ccddee");
 
-        Set<Character> uniq = phrase.getUniqChars();
+        Set<Character> uniq = phrase.getUniqueChars();
 
         Assertions.assertEquals(5, uniq.size());
         Assertions.assertTrue(uniq.contains('a'));
