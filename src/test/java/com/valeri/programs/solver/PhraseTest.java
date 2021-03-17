@@ -3,16 +3,14 @@ package com.valeri.programs.solver;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.Locale;
 import java.util.Set;
 
 public class PhraseTest {
 
     @Test
     public void shouldReturnAllUniqueCharactersInPhrase() {
-        Word w = new Word("aabbcc");
-        Word w2 = new Word("ccddee");
-        Phrase phrase = new Phrase(Arrays.asList(w, w2));
+        Phrase phrase = new Phrase("aabbcc ccddee");
 
         Set<Character> uniq = phrase.getUniqChars();
 
@@ -41,18 +39,48 @@ public class PhraseTest {
     }
 
     @Test
+    public void shouldBeTrueWhenPhrasesAreAnagrams3() {
+        Phrase p = new Phrase("tolstoy tutsi unwrap");
+        Phrase p2 = new Phrase("poultry outwits ants");
+
+        Assertions.assertTrue(p.checkAnagram(p2));
+    }
+
+    @Test
+    public void shouldBeTrueWhenPhrasesAreAnagrams4() {
+        Phrase p = new Phrase("new york times");
+        Phrase p2 = new Phrase("monkeys write");
+
+        Assertions.assertTrue(p.checkAnagram(p2));
+    }
+
+    @Test
+    public void shouldBeTrueWhenPhrasesAreAnagrams5() {
+        Phrase p = new Phrase("church of scientology");
+        Phrase p2 = new Phrase("rich chosen goofy cult");
+
+        Assertions.assertTrue(p.checkAnagram(p2));
+    }
+
+    @Test
+    public void shouldBeTrueWhenPhrasesAreAnagrams6() {
+        Phrase p = new Phrase("mcdonald`s");
+        p.addWord("restaurants");
+        p.removeLastWord();
+        p.addWord("restaurants");
+        p.addWord("chain");
+        p.removeLastWord();
+        Phrase p2 = new Phrase("uncle sam`s standard rot");
+
+        Assertions.assertTrue(p.checkAnagram(p2));
+    }
+
+    @Test
     public void shouldBeFalseWhenPhrasesAreAnagrams() {
         Phrase p = new Phrase("JVM platform kicks ass o");
         Phrase p2 = new Phrase("form splat kick sass");
 
         Assertions.assertFalse(p.checkAnagram(p2));
-    }
-
-    @Test
-    public void shouldReturnSortedLettersOfAWord() {
-        Phrase p = new Phrase("a e cb dfgh");
-
-        Assertions.assertEquals("   abcdefgh", p.computeSortedLetters());
     }
 
     @Test
@@ -65,7 +93,7 @@ public class PhraseTest {
 
     @Test
     public void shouldReturnMD5HashOfThePhrase() {
-        String hash = "35454B055CC325EA1AF2126E27707052";
+        String hash = "35454B055CC325EA1AF2126E27707052".toLowerCase(Locale.ROOT);
         String password = "ILoveJava";
         Phrase p = new Phrase(password);
 
