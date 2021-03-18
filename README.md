@@ -21,6 +21,6 @@ From 5 to N cores just shuffle the normal arrangement.
 
 With that optimisation I managed to generate the anagram phrase for medium hash in < 3 minutes.
 
-Easy - printout stout yawls
-Medium - ty outlaws printouts
-Hard - generated it once but I wont try again because my laptop is fried
+* Easy - printout stout yawls
+* Medium - ty outlaws printouts
+* Hard - generated it once but I wont try again because my laptop is fried
