@@ -71,7 +71,7 @@ class Phrase {
     }
 
     public boolean hasMoreLetters(Phrase other) {
-        Map<Character, Long> phraseLetterOccurences = this.countByCharacter();
+        Map<Character, Long> phraseLetterOccurences = this.getCountByCharacter();
         Map<Character, Long> otherOccurences = other.getCountByCharacter();
 
         for (Map.Entry<Character, Long> entry : phraseLetterOccurences.entrySet()) {
